@@ -15,7 +15,8 @@ class _Conversion:
     @printer
     def save(self, result_type="json"):
         save_types = {
-            "json": lambda: json.dump(self.result, open(self.out_file_name, 'w'))
+            "json": lambda: json.dump(self.result, open(self.out_file_name, 'w')),
+            "psql": lambda: self.result
         }
         if result_type in save_types.keys():
             save_types[result_type]()
@@ -34,3 +35,10 @@ class _Conversion:
 
     def clear_results(self):
         self.result = []
+
+
+def create_insert_psql(table: str, column_value: list[dict[str, str]], if_empty_case: str = "") -> str:
+    keys = column_value[0].keys()
+    values = [f'({", ".join([lines.get(k) if k in lines.keys() else if_empty_case for k in keys])})' for lines in column_value]
+    values = ", ".join(values)
+    return f'INSERT INTO "{table}"({", ".join(keys)}) VALUES {values};'
