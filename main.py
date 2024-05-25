@@ -1,6 +1,6 @@
-from src.main import Conversion
+from src.main import MultiConversion
 
 if __name__ == '__main__':
-    c = Conversion("test")
+    c = MultiConversion("test")
     c.convert()
     c.save(result_type="psql")
