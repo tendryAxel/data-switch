@@ -13,8 +13,14 @@ class _Conversion:
         self.content = list(csv.reader(open(self.in_file_name, 'r')))
 
     @printer
-    def save(self):
-        json.dump(self.result, open(self.out_file_name, 'w'))
+    def save(self, result_type="json"):
+        save_types = {
+            "json": lambda: json.dump(self.result, open(self.out_file_name, 'w'))
+        }
+        if result_type in save_types.keys():
+            save_types[result_type]()
+            return True
+        raise RuntimeError(f"the type:<{result_type}> is not supported")
 
     @printer
     def convert(self):
