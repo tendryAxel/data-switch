@@ -42,3 +42,8 @@ def create_insert_psql(table: str, column_value: list[dict[str, str]], if_empty_
     values = [f'({", ".join([lines.get(k) if k in lines.keys() else if_empty_case for k in keys])})' for lines in column_value]
     values = ", ".join(values)
     return f'INSERT INTO "{table}"({", ".join(keys)}) VALUES {values};'
+
+
+class Conversion(_Conversion):
+    def __init__(self, relative_file_name):
+        super().__init__(f".\\in\\{relative_file_name}.csv", f".\\out\\{relative_file_name}")

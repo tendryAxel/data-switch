@@ -1,10 +1,6 @@
-from src.main import _Conversion, create_insert_psql
+from src.main import Conversion
 
 if __name__ == '__main__':
-    c = _Conversion(".\\in\\test.csv", ".\\out\\test")
+    c = Conversion("test")
     c.convert()
     c.save(result_type="psql")
-    print(create_insert_psql("user", [
-        {"name": "axel", "age": "2", "test": "bien"},
-        {"age": "2", "name": "axel"},
-    ]))
