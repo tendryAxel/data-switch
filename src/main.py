@@ -15,8 +15,8 @@ class _Conversion:
     @printer
     def save(self, result_type="json"):
         save_types = {
-            "json": lambda: json.dump(self.result, open(self.out_file_name, 'w')),
-            "psql": lambda: self.result
+            "json": lambda: json.dump(self.result, open(self.out_file_name + ".json", 'w')),
+            "psql": lambda: open(self.out_file_name + ".sql", 'w').write(create_insert_psql(self.in_file_name.split('.')[-1], self.result))
         }
         if result_type in save_types.keys():
             save_types[result_type]()
